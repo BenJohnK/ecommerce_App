@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="card" style="margin-top: 30px;">
+<div class="card-header">
+    <a href="{% url 'store'%}" class="btn btn-outline-success" style="width: 20%;">Continue Shopping</a>
+</div>
+<div class="card-body" style="background-color: #343A40;color: white;">
+    <p style="float: left;">Total Items:{{cart_items_total}}</p>
+    <p style="float: right;">Total: ${{order.order_total}}</p>
+</div>
+</div>
+<div class="card card-body" style="background-color: lightgrey;margin-top: 30px;">
+    {% if order_items %}
+    <a href="" class="btn btn-warning" style="width: 20%;">Proceed to Checkout</a>
+    <br>
+    <table class="table table-dark">
+        <tr>
+            <th></th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Subtotal</th>
+        </tr>
+        {% for item in order_items %}
+        <tr>
+            <td style="width: 20%;height: 120px;"><img src="{{item.product.image.url}}" style="width: 100%;height: 100%;"></td>
+            <td>{{item.product}}</td>
+            <td>${{item.product.price}}</td>
+            <td><button class="add-button" productid="{{item.product.id}}" action="add" style="width: 30px;background-color: #343A40;color: white;border: 0;"><img src="{% static 'images/up-arrow.png' %}" width="100%" height="100%"></button>x{{item.quantity}}<button class="add-button" productid="{{item.product.id}}" action="remove" style="width: 30px;background-color: #343A40;color: white;border: 0;"><img src="{% static 'images/down-arrow.png' %}" width="100%" height="100%"></td>
+            <td>${{item.item_total}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <a href="" class="btn btn-warning" style="width: 20%;margin-left: 80%;">Proceed to Checkout</a>
+    {% else %}
+    <p>You dont have anything in cart. Continue Shopping and Come Back</p>
+    {% endif %}
+</div>
+{% endblock %}

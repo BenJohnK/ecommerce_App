@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row" style="margin-top:40px;">
+{% for product in products %}
+<div class="col-md-4"style="height: 400px;padding-bottom:100px;text-align:center"> 
+    <img src="{{product.image.url}}" style="width: 100%;height: 100%;">
+    <p style="float: left;">{{product.name}}</p>
+    <p style="float: right;">${{product.price|floatformat:2}}</p>
+    <button class="add-button" productid="{{product.id}}" action="add">Add to Cart</button>
+</div>
+{% endfor %}
+</div>
+{% endblock %}
