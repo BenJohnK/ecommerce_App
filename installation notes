@@ -1,0 +1,6 @@
+system requirements to run this project:
+
+1)python
+2)django
+3)pillow-a python package (run pip install pillow) to install.
+
