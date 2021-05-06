@@ -1,0 +1,16 @@
+{% extends 'admin_base.html' %}
+{% block content %}
+<div style="width: 40%;margin: auto;background-color: lightblue;" class="card card-body">
+    <form method="POST" action="" enctype="multipart/form-data" style="text-align:center;">{% csrf_token %}
+        {{form.name}}
+        {{form.price}}
+        {{form.description}}
+        {{form.image}}
+        {% if create %}
+        <input type="submit" class="btn btn-dark btn-block" value="Post">
+        {% else %}
+        <input type="submit" class="btn btn-dark btn-block" value="Update Phone">
+        {% endif %}
+    </form>
+</div>
+{% endblock %}

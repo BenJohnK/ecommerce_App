@@ -1,11 +1,11 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse,JsonResponse
-from .forms import CreateUserForm
+from .forms import CreateUserForm,CreateProductForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth import login,logout,authenticate
 from django.contrib.auth.decorators import login_required
-from . decorators import is_authenticated
+from . decorators import is_authenticated,is_admin
 from . models import *
 import json
 
@@ -13,6 +13,7 @@ import json
 
 
 @login_required(login_url='/login/')
+@is_admin
 def store(request):
     products=Product.objects.all()
     customer=request.user.customer
@@ -46,6 +47,7 @@ def loginPage(request):
     return render(request,"ecommerce/login.html",{})
 
 def logoutPage(request):
+    print("hit")
     logout(request)
     return redirect('/login/')
 
@@ -79,3 +81,50 @@ def cartPage(request):
     cart_items_total=order.cart_items_count
 
     return render(request,"ecommerce/cart.html",{'order':order,'order_items':order_items,'cart_items_total':cart_items_total})
+
+@login_required(login_url='/login/')
+def checkoutPage(request):
+    customer=request.user.customer
+    order=Order.objects.get(customer=customer,completed=False)
+    order_items=order.orderitem_set.all()
+    cart_items_total=order.cart_items_count
+    return render(request,"ecommerce/checkout.html",{'order':order,'order_items':order_items,'cart_items_total':cart_items_total})
+
+@login_required(login_url='/login/')
+def order_complete(request):
+    data=json.loads(request.body)
+    address=data['shippingdetails']['address']
+    city=data['shippingdetails']['city']
+    state=data['shippingdetails']['state']
+    country=data['shippingdetails']['country']
+    pincode=data['shippingdetails']['zipcode']
+    customer=request.user.customer
+    order=Order.objects.get(customer=customer,completed=False)
+    order.completed=True
+    order.save()
+    ShippingDetails.objects.create(address=address,city=city,state=state,country=country,customer=customer,order=order)
+    
+    return JsonResponse('reached backend',safe=False)
+
+def admin_home(request):
+    products=Product.objects.all()
+    return render(request,"ecommerce/admin_home.html",{'products':products})
+
+def create(request):
+    form=CreateProductForm()
+    if request.method=='POST':
+        form=CreateProductForm(request.POST,request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('/admin/home/')
+    return render(request,"ecommerce/createform.html",{'form':form,'create':True})
+
+def update(request,id):
+    product=Product.objects.get(id=id)
+    form=CreateProductForm(instance=product)
+    if request.method=='POST':
+        form=CreateProductForm(request.POST,request.FILES,instance=product)
+        if form.is_valid():
+            form.save()
+            return redirect('/admin/home/')
+    return render(request,"ecommerce/createform.html",{'form':form,'create':False})
