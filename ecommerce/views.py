@@ -5,7 +5,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth import login,logout,authenticate
 from django.contrib.auth.decorators import login_required
-from . decorators import is_authenticated,is_admin
+from . decorators import is_authenticated,is_admin,admin_only
 from . models import *
 import json
 
@@ -52,6 +52,7 @@ def logoutPage(request):
     return redirect('/login/')
 
 @login_required(login_url='/login/')
+@is_admin
 def updateCart(request):
     data=json.loads(request.body)
     productid=data['productid']
@@ -74,6 +75,7 @@ def updateCart(request):
     return JsonResponse('reached backend',safe=False)
 
 @login_required(login_url='/login/')
+@is_admin
 def cartPage(request):
     customer=request.user.customer
     order=Order.objects.get(customer=customer,completed=False)
@@ -83,6 +85,7 @@ def cartPage(request):
     return render(request,"ecommerce/cart.html",{'order':order,'order_items':order_items,'cart_items_total':cart_items_total})
 
 @login_required(login_url='/login/')
+@is_admin
 def checkoutPage(request):
     customer=request.user.customer
     order=Order.objects.get(customer=customer,completed=False)
@@ -91,6 +94,7 @@ def checkoutPage(request):
     return render(request,"ecommerce/checkout.html",{'order':order,'order_items':order_items,'cart_items_total':cart_items_total})
 
 @login_required(login_url='/login/')
+@is_admin
 def order_complete(request):
     data=json.loads(request.body)
     address=data['shippingdetails']['address']
@@ -106,10 +110,13 @@ def order_complete(request):
     
     return JsonResponse('reached backend',safe=False)
 
+@admin_only
 def admin_home(request):
+    print(request.get_full_path)
     products=Product.objects.all()
     return render(request,"ecommerce/admin_home.html",{'products':products})
 
+@admin_only
 def create(request):
     form=CreateProductForm()
     if request.method=='POST':
@@ -119,6 +126,7 @@ def create(request):
             return redirect('/admin/home/')
     return render(request,"ecommerce/createform.html",{'form':form,'create':True})
 
+@admin_only
 def update(request,id):
     product=Product.objects.get(id=id)
     form=CreateProductForm(instance=product)
@@ -128,3 +136,18 @@ def update(request,id):
             form.save()
             return redirect('/admin/home/')
     return render(request,"ecommerce/createform.html",{'form':form,'create':False})
+    
+@admin_only
+def delete(request,id):
+    product=Product.objects.get(id=id)
+    if request.method=='POST':
+        product.delete()
+        return redirect('/admin/home/')
+    return render(request,"ecommerce/deleteform.html",{'product':product})
+
+def viewProduct(request,id):
+    product=Product.objects.get(id=id)
+    customer=request.user.customer
+    order=Order.objects.get(customer=customer,completed=False)
+    cart_items_total=order.cart_items_count
+    return render(request,"ecommerce/viewproduct.html",{'product':product,'cart_items_total':cart_items_total})

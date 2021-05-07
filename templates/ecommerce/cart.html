@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+<div class="container">
 <div class="card" style="margin-top: 30px;">
 <div class="card-header">
     <a href="{% url 'store'%}" class="btn btn-outline-success" style="width: 20%;">Continue Shopping</a>
@@ -36,5 +37,6 @@
     {% else %}
     <p>You dont have anything in cart. Continue Shopping and Come Back</p>
     {% endif %}
+</div>
 </div>
 {% endblock %}
