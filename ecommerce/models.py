@@ -6,9 +6,15 @@ from django.contrib.auth.models import User
 class Product(models.Model):
     name = models.CharField(max_length=200,null=True)
     price=models.FloatField(null=True)
-    description=models.CharField(max_length=200,null=True)
+    d1=models.CharField(max_length=80,null=True)
+    d2=models.CharField(max_length=80,null=True)
+    d3=models.CharField(max_length=80,null=True)
+    d4=models.CharField(max_length=80,null=True)
+    d5=models.CharField(max_length=80,null=True,blank=True)
+    d6=models.CharField(max_length=80,null=True,blank=True)
     date_created=models.DateTimeField(auto_now_add=True)
     image=models.ImageField(null=True)
+    largeimage=models.ImageField(null=True)
 
     def __str__(self):
         return self.name

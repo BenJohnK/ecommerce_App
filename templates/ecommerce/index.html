@@ -1,15 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load humanize %}
 {% block content %}
 <style>
     body{
         background-color: #F0F2F5;
-    }
-    .title{
-        color: black;
-    }
-    .title:hover{
-        color: blue;
     }
 </style>
 <div class="container-fluid">
@@ -26,13 +21,16 @@
                     <img src="{{product.image.url}}" width="50%" height="220px">
                 </div>
                 <div style="width:50%;float:left;margin-left: 4%;">
-                    <p  class="title" style="font-weight: bold;font-size: 18px;">{{product.name}}</p>
-                    <div style="width: 40%;">
-                        <p style="color:black;">{{product.description}}</p>
-                    </div>
+                    <p  class="title" style="font-weight: 600;font-size: 18px;">{{product.name}}</p>
+                    <p class="description">{{product.d1}}</p>
+                    <p class="description">{{product.d2}}</p>
+                    <p class="description">{{product.d3}}</p>
+                    <p class="description">{{product.d4}}</p>
+                    <p class="description">{{product.d5}}</p>
+                    <p class="description">{{product.d6}}</p>
                 </div>
                 <div style="float:left;margin-left: 2%;">
-                    <p>hi</p>
+                    <p style="font-size: 25px;color: black;font-weight: 600;">₹{{product.price|floatformat:0|intcomma}}</p>
                 </div>
                 </div></a>
             <hr>

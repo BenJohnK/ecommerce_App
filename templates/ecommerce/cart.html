@@ -25,7 +25,7 @@
         </tr>
         {% for item in order_items %}
         <tr>
-            <td style="width: 20%;height: 120px;"><img src="{{item.product.image.url}}" style="width: 100%;height: 100%;"></td>
+            <td style="width: 20%;height: 120px;text-align: center;"><img src="{{item.product.image.url}}" style="width: 30%;height: 100%;"></td>
             <td>{{item.product}}</td>
             <td>${{item.product.price}}</td>
             <td><button class="add-button" productid="{{item.product.id}}" action="add" style="width: 30px;background-color: #343A40;color: white;border: 0;"><img src="{% static 'images/up-arrow.png' %}" width="100%" height="100%"></button>x{{item.quantity}}<button class="add-button" productid="{{item.product.id}}" action="remove" style="width: 30px;background-color: #343A40;color: white;border: 0;"><img src="{% static 'images/down-arrow.png' %}" width="100%" height="100%"></td>

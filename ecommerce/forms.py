@@ -15,5 +15,10 @@ class CreateProductForm(ModelForm):
         widgets={
             "name":forms.TextInput(attrs={'placeholder':'Enter Product Name','class':'form-control','style':'width:100%'}),
             "price":forms.NumberInput(attrs={'placeholder':'Enter Product Price','class':'form-control','style':'width:100%'}),
-            "description":forms.TextInput(attrs={'placeholder':'Enter Product Description','class':'form-control','style':'width:100%'}),
+            "d1":forms.TextInput(attrs={'placeholder':'Enter description 1','class':'form-control','style':'width:100%'}),
+            "d2":forms.TextInput(attrs={'placeholder':'Enter description 2','class':'form-control','style':'width:100%'}),
+            "d3":forms.TextInput(attrs={'placeholder':'Enter description 3','class':'form-control','style':'width:100%'}),
+            "d4":forms.TextInput(attrs={'placeholder':'Enter description 4','class':'form-control','style':'width:100%'}),
+            "d5":forms.TextInput(attrs={'placeholder':'Enter description 5','class':'form-control','style':'width:100%'}),
+            "d6":forms.TextInput(attrs={'placeholder':'Enter description 6','class':'form-control','style':'width:100%'})
         }

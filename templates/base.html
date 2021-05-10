@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link href="{% static 'css/main.css' %}" rel="stylesheet">
     <link href="{% static 'css/checkout.css' %}" rel="stylesheet">
+    <link href="{% static 'css/jquery.jqzoom.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/all.css' %}" rel="stylesheet">
     <style>
       body{
         background-color: white;
@@ -67,4 +69,21 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="{% static 'js/cart.js'%}"></script>
+<script src="{% static 'js/jquery-1.6.js'%}"></script>
+<script src="{% static 'js/jquery.jqzoom-core.js'%}"></script>
+<script>
+  $(document).ready(function () {  
+    $('.minipic').jqzoom({  
+    zoomType: 'standard',  
+    lens: true,  
+    preloadImages: false,  
+    alwaysOn: false,  
+    zoomHeight: 420,  
+    zoomWidth:600
+    });  
+    $('#image').css({'width': '90%','height':'120%'});
+    $('.test').css({'padding-left':'120px'})
+    $('.zoomWindow').css({'margin-left':'140px'})
+ });  
+</script>
 </html>

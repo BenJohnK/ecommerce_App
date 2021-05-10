@@ -4,8 +4,16 @@
     <form method="POST" action="" enctype="multipart/form-data" style="text-align:center;">{% csrf_token %}
         {{form.name}}
         {{form.price}}
-        {{form.description}}
+        {{form.d1}}
+        {{form.d2}}
+        {{form.d3}}
+        {{form.d4}}
+        {{form.d5}}
+        {{form.d6}}
+        {{form.image.label}}
         {{form.image}}
+        {{form.largeimage.label}}
+        {{form.largeimage}}
         {% if create %}
         <input type="submit" class="btn btn-dark btn-block" value="Post">
         {% else %}
